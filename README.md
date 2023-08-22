@@ -1,2 +1,2 @@
 # Deep Learning Notes
-This repository contains my thoughts and experiences of deep learning. 
+The notes are written with Markdown which is convenient when I have to inset the code.
