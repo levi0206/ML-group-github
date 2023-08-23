@@ -2,7 +2,7 @@
 HW1 source: [Hung-Yi Lee ML course 2023](https://speech.ee.ntu.edu.tw/~hylee/ml/2023-spring.php)
 
 ## What is regression?
-Regression is a supervised learning problem. Given a data set $`D=(x_i,y_i)_{i=1}^n`$ where $`x_i=(x^{(num)},x^{(cat)})\in\mathbb{X}`$ represents numerical $`x^{(num)}`$ and categorical $`x^{(cat)}`$ features and $`y_i\in\mathbb{Y}`$ denotes the corresponding object label. $`D`$ is split into three disjoint subsets: $`D\cup D_{train}\cup D_{val}\cup D_{test}`$. Regression can be viewed as a classification problem with $`\mathbb{Y}=\mathbb{R}$.
+Regression is a supervised learning problem. Given a data set $`D=(x_i,y_i)_{i=1}^n`$ where $`x_i=(x^{(num)},x^{(cat)})\in\mathbb{X}`$ represents numerical $`x^{(num)}`$ and categorical $`x^{(cat)}`$ features and $`y_i\in\mathbb{Y}`$ denotes the corresponding object label. $`D`$ is split into three disjoint subsets: $`D\cup D_{train}\cup D_{val}\cup D_{test}`$. Regression can be viewed as a classification problem with $`\mathbb{Y}=\mathbb{R}`$.
 
 ## Neural Network Architecture
 To solve a regression problem, people usually use MLP, a very simple model. A multilayer perceptron with three layers is like:
