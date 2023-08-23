@@ -1,0 +1,51 @@
+# Regression
+HW1 source: [Hung-Yi Lee ML course 2023](https://speech.ee.ntu.edu.tw/~hylee/ml/2023-spring.php)
+
+## What is regression?
+Regression is a supervised learning problem. Given a data set $`D=(x_i,y_i)_{i=1}^n`$ where $`x_i=(x^{(num)},x^{(cat)})\in\mathbb{X}`$ represents numerical $`x^{(num)}`$ and categorical $`x^{(cat)}`$ features and $`y_i\in\mathbb{Y}`$ denotes the corresponding object label. $`D`$ is split into three disjoint subsets: $`D\cup D_{train}\cup D_{val}\cup D_{test}`$. Regression can be viewed as a classification problem with $`\mathbb{Y}=\mathbb{R}$.
+
+## Neural Network Architecture
+To solve a regression problem, people usually use MLP, a very simple model. A multilayer perceptron with three layers is like:
+```
+nn.Sequential(
+            nn.Linear(input_dim,a),
+            nn.ReLU(),
+            nn.Linear(a, b),
+            nn.ReLU(),
+            nn.Linear(b, 1),
+)
+```
+The first layer is the input layer where the parameter `in_features` must be equal to the dimension of the input vector. The last layer is the output layer. Our task is to output a real value, so `out_features` is 1. It's worth being noted that no activation function is put after the output layer since the output could be any real number and we don't want to restrict the output in some range.
+
+
+
+## Tuning Hyperparameters
+### Optimizer
+The choice of optimizer may effects the convergence rate and the exploration of local minimum. Which optimizer is the best one? There are many studies and Stackoverflow posts about this question based on different settings. However, I think the lastest algorithms such as **Adam**, **Adagrad**, **RMSProp** are generally (but not absolutely) better since they usually report results on standard datasets and may beat previous algorithms.
+
+**SGD** (Stochastic gradient descent) is the most basic optimzer for model optimization, but it's seldem used now. One reason is that it's learning rate is fixed. 
+> Hence it doesn't work well when the parameters are in different scales since a low learning rate will make the learning slow while a large learning rate might lead to oscillations.
+
+Moreover, it's generally considered having a hard time to escape saddle points. Probably this is the reason why people avoid using SGD nowadays. 
+
+To improve SGD, we could use **momentum** and **nesterov** acceleration together with SGD. Vanilla SGD updates parameters by
+```math
+\theta_{t+1}=\theta_k-\eta\nabla Loss(\theta_k)
+```
+SGD together with momentum could be like
+```math
+\theta_{t+1}=\gamma\theta_k-\eta\nabla Loss(\theta_k),\quad \gamma\in[0,1].
+```
+Intuitively, momentum somehow reserve the previous updating direction by multiplying a constant. As the formula indicates, momentum can amplify the spped of correct direction and slow down the wrong direction. To accelerate optimization, we usually set momentum large. However, when we're close to the local minima, our momentum is still large and don't know it should stop. This may cause the algorithm to miss the local minima.
+
+![image alt](https://github.com/levi0206/Deep_Learning_Notes/blob/3919a90b0a32a10db7382bebaf30bb7d252c429e/image/SGD%20with%3Awithout%20momentum.png)
+
+Nesterov momentum 
+```math
+\theta_{t+1}=\gamma\theta_k-\eta\nabla Loss(\theta_k),\quad \gamma\in[0,1]
+```
+
+## References
+[Stackoverflow: Gradient Descent vs Adagrad vs Momentum in TensorFlow](https://stackoverflow.com/questions/36162180/gradient-descent-vs-adagrad-vs-momentum-in-tensorflow)
+[Stack Exchange: Guidelines for selecting an optimizer for training neural networks](https://datascience.stackexchange.com/questions/10523/guidelines-for-selecting-an-optimizer-for-training-neural-networks)
+[An overview of gradient descent optimization algorithms](https://arxiv.org/abs/1609.04747),Sebastian Ruder
