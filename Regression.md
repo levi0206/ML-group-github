@@ -4,6 +4,8 @@ HW1 source: [Hung-Yi Lee ML course 2023](https://speech.ee.ntu.edu.tw/~hylee/ml/
 ## Preface
 My first deep learning task is COVID-19 Cases Prediction with deep neural network (DNN). Given survey results in the **past 3 days** in a specific state in U.S., then predict the percentage of **new tested positive cases in the 3rd day**. Even in this fundamental DL task, I stuck in many problems such as neural network architecture, the choice of optimizer, tuning hyperparameter. As a record, I write down what I learned in this notes.
 
+This notes will not present the best version of my model since I forgot to save it. After numerous trials, my public score can pass the boss line, but my private score cannot.
+
 ## What is regression?
 Regression is a supervised learning problem. Given a data set $`D=(x_i,y_i)_{i=1}^n`$ where $`x_i=(x^{(num)},x^{(cat)})\in\mathbb{X}`$ represents numerical $`x^{(num)}`$ and categorical $`x^{(cat)}`$ features and $`y_i\in\mathbb{Y}`$ denotes the corresponding object label. $`D`$ is split into three disjoint subsets: $`D\cup D_{train}\cup D_{val}\cup D_{test}`$. Regression can be viewed as a classification problem with $`\mathbb{Y}=\mathbb{R}`$.
 
@@ -88,10 +90,20 @@ Optimizer parameters: `momentum=0.9`, `weight_decay=1e-5`, `lr=1e-5`
 - Purple: SGD+momentum
 - Green: SGD+momentum+NAG
 - Orange: RMSProp
-All the other hyperparameter are the same. It turns out that RMSProp eventually has lower loss, and the green one outperforms the purple one. 
 
 ![image alt](https://github.com/levi0206/Deep_Learning_Notes/blob/c910202f7426eade11c003fe77640cdc8b466ead/image/SGD%20vs%20RMSProp.png)
 
+All the other hyperparameter are the same. It turns out that RMSProp eventually has lower loss, and the green one outperforms the purple one. 
+
+## Tuning Hyperparameter
+To attain satisfying accuracy, generally there are three things we can do: **change model**, **tune hyperparameter** such as momentum, learning rate, batch size and so on, and **select good features**. I didn't change the model structure except adding one more layer. Since we're doing **regression**, I expect that the network should become **thiner** as the index of layer becomes larger. My experience tells me that 3 layers with $`a=40`$ and $`b=16`$ is the best one. 
+
+I found that batch size does not effect the result much. We can choose a number in a simply certain range. From my experiences, I think it between 128 and 256 would be good. As for feature selection, using 
+`SelectKBest` in `sklearn` is helpful for selecting important features. 
+
+Also, when tuning hyperparameter, I will tune a variable and keep all the other variables fixed to check the outcome conveniently. It's important that **the seed should be fixed** when we're finding optimal hyperparameter, since **once seed and parameters are fixed, the ouput is fixed**. 
+
+Although I tried many different combinations of above parameters, the accuracy does not improve much. Probably this is why people say that training deep learning models requires sufficient experiences. 
 
 ## References
 [Stackoverflow: Gradient Descent vs Adagrad vs Momentum in TensorFlow](https://stackoverflow.com/questions/36162180/gradient-descent-vs-adagrad-vs-momentum-in-tensorflow)
