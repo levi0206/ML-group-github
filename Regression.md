@@ -61,6 +61,37 @@ To find a local minima, it's dangerous to let the ball roll straightly down a hi
 ![image alt](https://github.com/levi0206/Deep_Learning_Notes/blob/6219bbc24054903186dd42520cdc771e30fbcc69/image/Nesterov%20update.png)
 Again the momentum term is usually set to 0.9. Momentum first computes the current gradient (small blue vector $`\nabla Loss(\theta_t)`$) and then takes a big jump in the direction of the updated accumulated gradient (big blue vector $`\gamma v_{t-1}`$). NAG on the otherhand first makes a big jump in the direction of the previous accumulated gradient (brown vector $`\gamma v_{t-1}`$), measures the gradient and then makes a correction (green vector $`\nabla Loss(\theta_t-\gamma v_{t-1})`$).
 
+**RMSProp** is my choice is this regression task. Let $`g_t`$ denote the gradient of loss at time $`t`$. RMSProp is simply
+```math
+\begin{aligned}
+& \theta_{t+1}=\theta_t-\frac{\eta}{\sqrt{E[g^2]_t+\epsilon}}g_t \\
+& E[g^2]_t=\gamma E[g^2]_{t-1}+(1-\gamma)g_t^2.
+\end{aligned}
+```
+$`\gamma`$ is suggested to be 0.9, and $`\eta`$ is suggested to be 0.001. RMSprop divides the learning rate by an exponentially decaying average of squared gradients. 
+
+This is a comparison of SGD with/without momentum and RMSProp made by myself when I first know people think RMSSProp is generally better than SGD. This is not a rigorous test, just a quick check whether it holds true for me. 
+### Parameter
+
+Neural network: 
+```
+self.layers = nn.Sequential(
+            nn.Linear(input_dim, 56),
+            nn.ReLU(),
+            nn.Linear(56, 16),
+            nn.ReLU(),
+            nn.Linear(16,1),
+        )
+```
+
+Optimizer parameters: `momentum=0.9`, `weight_decay=1e-5`, `lr=1e-5`
+- Purple: SGD+momentum
+- Green: SGD+momentum+NAG
+- Orange: RMSProp
+All the other hyperparameter are the same. It turns out that RMSProp eventually has lower loss, and the green one outperforms the purple one. 
+
+![image alt](https://github.com/levi0206/Deep_Learning_Notes/blob/c910202f7426eade11c003fe77640cdc8b466ead/image/SGD%20vs%20RMSProp.png)
+
 
 ## References
 [Stackoverflow: Gradient Descent vs Adagrad vs Momentum in TensorFlow](https://stackoverflow.com/questions/36162180/gradient-descent-vs-adagrad-vs-momentum-in-tensorflow)
