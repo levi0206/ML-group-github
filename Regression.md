@@ -41,10 +41,12 @@ SGD together with momentum could be like
 & v_t=\gamma v_{t-1}+\eta\nabla Loss(\theta_t),\quad \gamma\in[0,1]
 \end{aligned}
 ```
-Intuitively, omentum somehow reserve the previous updating direction by multiplying a constant. As the formula indicates, momentum can amplify the spped of correct direction and slow down the wrong direction. 
-In practice, SGD with momentum indeed reduce oscillation and stabilize convergence. To accelerate optimization, we usually set momentum large. However, when we're close to the local minima, our momentum is still large and don't know it should stop. This may cause the algorithm to miss the local minima.
+We usually set the momentum term 0.9.
 
->Essentially, when using momentum, we push a ball down a hill. The ball accumulates momentum as it rolls downhill, becoming faster and faster on the way
+Intuitively, omentum somehow reserve the previous updating direction by multiplying a constant. As the formula indicates, momentum can amplify the spped of correct direction and slow down the wrong direction. 
+In practice, SGD with momentum indeed reduce oscillation and stabilize convergence. To accelerate optimization, we usually set momentum large. However, when we're close to the local minima, our momentum is still large and don't know it should stop. This may cause the algorithm to miss the local minima. 
+
+>Essentially, when using momentum, we push a ball down a hill. The ball accumulates momentum as it rolls downhill, becoming faster and faster on the way.
 
 ![image alt](https://github.com/levi0206/Deep_Learning_Notes/blob/3919a90b0a32a10db7382bebaf30bb7d252c429e/image/SGD%20with%3Awithout%20momentum.png)
 
@@ -53,9 +55,10 @@ To find a local minima, it's dangerous to let the ball roll straightly down a hi
 ```math
 \begin{aligned}
 & \theta_{t+1}=\gamma\theta_k-v_t \\
-& v_t=\gamma v_{t-1}+\eta\nabla Loss(\theta_t-\gamma v_{t-1),\quad \gamma\in[0,1]
+& v_t=\gamma v_{t-1}+\eta\nabla Loss(\theta_t-\gamma v_{t-1}),\quad \gamma\in[0,1]
 \end{aligned}
 ```
+
 
 ## References
 [Stackoverflow: Gradient Descent vs Adagrad vs Momentum in TensorFlow](https://stackoverflow.com/questions/36162180/gradient-descent-vs-adagrad-vs-momentum-in-tensorflow)
