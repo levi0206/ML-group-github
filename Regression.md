@@ -22,8 +22,7 @@ The first layer is the input layer where the parameter `in_features` must be equ
 
 
 
-## Tuning Hyperparameters
-### Optimizer
+## Optimizer
 The choice of optimizer may effects the convergence rate and the exploration of local minimum. Which optimizer is the best one? There are many studies and Stackoverflow posts about this question based on different settings. However, I think the lastest algorithms such as **Adam**, **Adagrad**, **RMSProp** are generally (but not absolutely) better since they usually report results on standard datasets and may beat previous algorithms.
 
 **SGD** (Stochastic gradient descent) is the most basic optimzer for model optimization, but it's seldem used now. One reason is that it's learning rate is fixed. 
@@ -42,20 +41,23 @@ SGD together with momentum could be like
 & v_t=\gamma v_{t-1}+\eta\nabla Loss(\theta_t),\quad \gamma\in[0,1]
 \end{aligned}
 ```
-Intuitively, momentum somehow reserve the previous updating direction by multiplying a constant. As the formula indicates, momentum can amplify the spped of correct direction and slow down the wrong direction. 
+Intuitively, omentum somehow reserve the previous updating direction by multiplying a constant. As the formula indicates, momentum can amplify the spped of correct direction and slow down the wrong direction. 
 In practice, SGD with momentum indeed reduce oscillation and stabilize convergence. To accelerate optimization, we usually set momentum large. However, when we're close to the local minima, our momentum is still large and don't know it should stop. This may cause the algorithm to miss the local minima.
+
+>Essentially, when using momentum, we push a ball down a hill. The ball accumulates momentum as it rolls downhill, becoming faster and faster on the way
 
 ![image alt](https://github.com/levi0206/Deep_Learning_Notes/blob/3919a90b0a32a10db7382bebaf30bb7d252c429e/image/SGD%20with%3Awithout%20momentum.png)
 
-Nesterov momentum 
+To find a local minima, it's dangerous to let the ball roll straightly down a hill. It could be better if there's another ball knows slowing down before the hill slopes up again. 
+
 ```math
 \begin{aligned}
 & \theta_{t+1}=\gamma\theta_k-v_t \\
-& v_t=\gamma v_{t-1}+\eta\nabla Loss(\theta_t),\quad \gamma\in[0,1]
+& v_t=\gamma v_{t-1}+\eta\nabla Loss(\theta_t-\gamma v_{t-1),\quad \gamma\in[0,1]
 \end{aligned}
 ```
 
 ## References
 [Stackoverflow: Gradient Descent vs Adagrad vs Momentum in TensorFlow](https://stackoverflow.com/questions/36162180/gradient-descent-vs-adagrad-vs-momentum-in-tensorflow)
 [Stack Exchange: Guidelines for selecting an optimizer for training neural networks](https://datascience.stackexchange.com/questions/10523/guidelines-for-selecting-an-optimizer-for-training-neural-networks)
-[An overview of gradient descent optimization algorithms](https://arxiv.org/abs/1609.04747),Sebastian Ruder
+[An overview of gradient descent optimization algorithms](https://arxiv.org/abs/1609.04747), Sebastian Ruder
