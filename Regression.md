@@ -50,7 +50,7 @@ In practice, SGD with momentum indeed reduce oscillation and stabilize convergen
 
 ![image alt](https://github.com/levi0206/Deep_Learning_Notes/blob/3919a90b0a32a10db7382bebaf30bb7d252c429e/image/SGD%20with%3Awithout%20momentum.png)
 
-To find a local minima, it's dangerous to let the ball roll straightly down a hill. It could be better if there's another ball knows slowing down before the hill slopes up again. 
+To find a local minima, it's dangerous to let the ball roll straightly down a hill. It could be better if there's another ball knows slowing down before the hill slopes up again. This smarter ball is called Nesterov accelerated gradient (NAG).
 
 ```math
 \begin{aligned}
@@ -58,6 +58,8 @@ To find a local minima, it's dangerous to let the ball roll straightly down a hi
 & v_t=\gamma v_{t-1}+\eta\nabla Loss(\theta_t-\gamma v_{t-1}),\quad \gamma\in[0,1]
 \end{aligned}
 ```
+![image alt](https://github.com/levi0206/Deep_Learning_Notes/blob/6219bbc24054903186dd42520cdc771e30fbcc69/image/Nesterov%20update.png)
+Again the momentum term is usually set to 0.9. Momentum first computes the current gradient (small blue vector $`\nabla Loss(\theta_t)`$) and then takes a big jump in the direction of the updated accumulated gradient (big blue vector $`\gamma v_{t-1}`$). NAG on the otherhand first makes a big jump in the direction of the previous accumulated gradient (brown vector $`\gamma v_{t-1}`$), measures the gradient and then makes a correction (green vector $`\nabla Loss(\theta_t-\gamma v_{t-1})`$).
 
 
 ## References
