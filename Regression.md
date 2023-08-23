@@ -1,6 +1,9 @@
 # Regression
 HW1 source: [Hung-Yi Lee ML course 2023](https://speech.ee.ntu.edu.tw/~hylee/ml/2023-spring.php)
 
+## Preface
+My first deep learning task is COVID-19 Cases Prediction with deep neural network (DNN). Given survey results in the **past 3 days** in a specific state in U.S., then predict the percentage of **new tested positive cases in the 3rd day**. Even in this fundamental DL task, I stuck in many problems such as neural network architecture, the choice of optimizer, tuning hyperparameter. As a record, I write down what I learned in this notes.
+
 ## What is regression?
 Regression is a supervised learning problem. Given a data set $`D=(x_i,y_i)_{i=1}^n`$ where $`x_i=(x^{(num)},x^{(cat)})\in\mathbb{X}`$ represents numerical $`x^{(num)}`$ and categorical $`x^{(cat)}`$ features and $`y_i\in\mathbb{Y}`$ denotes the corresponding object label. $`D`$ is split into three disjoint subsets: $`D\cup D_{train}\cup D_{val}\cup D_{test}`$. Regression can be viewed as a classification problem with $`\mathbb{Y}=\mathbb{R}`$.
 
@@ -34,15 +37,22 @@ To improve SGD, we could use **momentum** and **nesterov** acceleration together
 ```
 SGD together with momentum could be like
 ```math
-\theta_{t+1}=\gamma\theta_k-\eta\nabla Loss(\theta_k),\quad \gamma\in[0,1].
+\begin{aligned}
+& \theta_{t+1}=\gamma\theta_k-v_t \\
+& v_t=\gamma v_{t-1}+\eta\nabla Loss(\theta_t),\quad \gamma\in[0,1]
+\end{aligned}
 ```
-Intuitively, momentum somehow reserve the previous updating direction by multiplying a constant. As the formula indicates, momentum can amplify the spped of correct direction and slow down the wrong direction. To accelerate optimization, we usually set momentum large. However, when we're close to the local minima, our momentum is still large and don't know it should stop. This may cause the algorithm to miss the local minima.
+Intuitively, momentum somehow reserve the previous updating direction by multiplying a constant. As the formula indicates, momentum can amplify the spped of correct direction and slow down the wrong direction. 
+In practice, SGD with momentum indeed reduce oscillation and stabilize convergence. To accelerate optimization, we usually set momentum large. However, when we're close to the local minima, our momentum is still large and don't know it should stop. This may cause the algorithm to miss the local minima.
 
 ![image alt](https://github.com/levi0206/Deep_Learning_Notes/blob/3919a90b0a32a10db7382bebaf30bb7d252c429e/image/SGD%20with%3Awithout%20momentum.png)
 
 Nesterov momentum 
 ```math
-\theta_{t+1}=\gamma\theta_k-\eta\nabla Loss(\theta_k),\quad \gamma\in[0,1]
+\begin{aligned}
+& \theta_{t+1}=\gamma\theta_k-v_t \\
+& v_t=\gamma v_{t-1}+\eta\nabla Loss(\theta_t),\quad \gamma\in[0,1]
+\end{aligned}
 ```
 
 ## References
