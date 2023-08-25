@@ -107,5 +107,7 @@ Although I tried many different combinations of above parameters, the accuracy d
 
 ## References
 [Stackoverflow: Gradient Descent vs Adagrad vs Momentum in TensorFlow](https://stackoverflow.com/questions/36162180/gradient-descent-vs-adagrad-vs-momentum-in-tensorflow)
+
 [Stack Exchange: Guidelines for selecting an optimizer for training neural networks](https://datascience.stackexchange.com/questions/10523/guidelines-for-selecting-an-optimizer-for-training-neural-networks)
+
 [An overview of gradient descent optimization algorithms](https://arxiv.org/abs/1609.04747), Sebastian Ruder
