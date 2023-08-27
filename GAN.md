@@ -6,10 +6,10 @@
   - We could perform regression on these simulations to predict the future events or find the optimal strategy.
  
 ## Framework
-There are two roles in GAN: **generator** and **discriminator**.
+There are two roles in GAN: **generator** and **discriminator**. They are usually neural networks respectively.
 - Generator:
   - The counterfeiter trying to make fake currency
-  - A differentiable function $G:\mathcal{Z}to\mathcal{X}$ that inputs a latent vector and output a fake sample
+  - A differentiable function $G:\mathcal{Z}\to\mathcal{X}$ that inputs a latent vector and output a fake sample
   - $\mathcal{Z}$ is the latent space
   - Let $z$ be a random variable in $\mathcal{Z}$ with known distribution $\mathbb{P}_z$.
 - Discriminator
