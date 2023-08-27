@@ -3,7 +3,7 @@ Welcome the machine learning reading group! Before becoming a part of our commun
 ## About this group
 The topics and content are listed in this [Notion website](https://absorbed-breadfruit-366.notion.site/Machine-Learning-Reading-Group-206d210a777a428baf874b43d0dcb7e4?pvs=4). Each individual is encouraged to select a topic that hasn't already been chosen by others. The duration of the study group is set to span one year.
 
-Meeting schedule: every Tuesday 19:00-20:00
+Meeting schedule: every Tuesday 19:00-20:00, starting from 9/5. 
 
 ## Formatting
 If you're interested in contributing notes, ensure that your content is well-structured and covers motivation, frameworks, algorithms, intricate details and references. Feel free to incorporate key mathematical theorems along with insightful proofs, emphasizing the significance of each theorem and any unique techniques employed in the proofs. Additionally, when inserting images into your notes, please offer sufficient explanations for clarity. We especially focus on the **details**, **not simply the model structure and intuition**. Your notes should be written with **Markdown** (in convenience of editting).
@@ -25,5 +25,8 @@ You just have to prepare your notes for your presentation. **Participants are we
 - Notes contributors:
   - Le-Rong Hsu 
   - De-Jin Huang 
- 
+
+
+Best, 
+Le-Rong Hsu
 
