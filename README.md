@@ -13,7 +13,7 @@ For programming assignment contributors, please provide your environment setting
 - operating system: windows10, windows11, macos big sur, linux, ...
 - packages versions, including: python, torch, tensorflow, matplotlob, numpy, ...
 
-There's no restriction to the packages you use. You can use any packages you want to use.
+There's no restriction to the packages you use. You can use any package you want to use.
 
 Feel free to add comments for clarity. 
 
