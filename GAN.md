@@ -16,3 +16,5 @@ There are two roles in GAN: **generator** and **discriminator**. They are usuall
   - The police, trying to allow legitimate money and catch counterfeit money
   - A differentiable function $D$ that inputs a fake or real sample and outputs the probability that the sample is **real**
 
+## Workflow
+![image alt](https://github.com/levi0206/Machine-Learning-Topics/blob/532830f645ce78786afc70bf2acf8ccab3065376/image/GAN%20workflow.png)
