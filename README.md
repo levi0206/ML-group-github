@@ -1,3 +1,3 @@
-# Deep Learning Notes
+# Machine Learning Topics
 
-(Please don't edit it)
+
