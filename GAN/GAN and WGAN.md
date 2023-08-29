@@ -74,3 +74,23 @@ Expectation is an integral. We could expect that we can replace $y$ by a random 
 \frac{d}{dx}\mathbb{E}[g(x,X)]=\mathbb{E}[\frac{\partial}{\partial x}g(x,X)].
 ```
 You can replace $x$ by parameters $\theta$. There's a more general theorem with similar form of the conditions, but we're not going to mention it.
+
+Thus, we have
+```math
+\begin{aligned}
+    \nabla J^{(D)}(\theta^{(D)},\theta^{(G)}) & = \nabla\left(-\frac{1}{2}\mathbb{E}_{x\sim \mathbb{P}_{data}} \log D(x) -\frac{1}{2}\mathbb{E}_z \log (1-D(G(z)))\right) \\
+    & = -\frac{1}{2}\mathbb{E}_{x\sim \mathbb{P}_{data}} \nabla\log D(x)-\frac{1}{2}\mathbb{E}_z \nabla\log (1-D(G(z)))
+\end{aligned}
+```
+and 
+```math
+\begin{aligned}
+    \nabla J^{(G)} & = \nabla\left(-\frac{1}{2}\mathbb{E}_z \log D(G(z))\right)\\
+    & = -\frac{1}{2}\mathbb{E}_z \nabla\log D(G(z))
+\end{aligned}
+```
+$\nabla \log D(x)$ and $\nabla \log D(G(z))$ can be calculated with **backpropagation**, and each expectation can be estimated using **Monte Carlo estimation**.
+
+The more detained training algorithm is like:
+![image alt](https://github.com/levi0206/ML-group-github/blob/d0f1833e2087c95d5c57e05e50e1af0084977642/image/GAN%20training%20algorithm.png)
+After calculating the gradient of loss, we can update parameters by applying different optizers such as Adam, RMSProp and so on. 
