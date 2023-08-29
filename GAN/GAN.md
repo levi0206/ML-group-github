@@ -61,11 +61,11 @@ We have to calucate the gradient of loss to update our parameters. However, it's
 
 **Theorem (Leibnitz integral rule)** If $a(x),b(x),f(x,y)$ are $C^1$, then 
 ```math
-\frac{d}{dx}\int_{a(x)}^{b(x)} f(x,y)dy=f(x,b(x))b'(x)-f(x,a(x))a'(x)+\int_{a(x)}^{b(x)} \frac{\partial f}{\partial x}(x,y)dy.
+\frac{d}{dx}\int_{a(x)}^{b(x)} f(x,y)dy=f(x,b(x))b'(x)-f(x,a(x))a'(x)+\int_{a(x)}^{b(x)} \frac{\partial }{\partial x}f(x,y)dy.
 ```
 If $a(x),b(x)$ are constant, then 
 ```math
-\frac{d}{dx}\int_{a(x)}^{b(x)} f(x,y)dy=\frac{\partial f}{\partial x}(x,y)dy.
+\frac{d}{dx}\int_{a(x)}^{b(x)} f(x,y)dy=\frac{\partial }{\partial x}f(x,y)dy.
 ```
 Expectation is an integral. We could expect that we can replace $y$ by a random variable $Y$ under some conditions. Indeed, such theorem exists.
 
