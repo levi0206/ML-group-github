@@ -15,16 +15,6 @@ For programming assignment contributors, please provide your environment setting
 There's no restriction to the packages you use. You can use any package you want to use.
 
 Feel free to add comments for clarity. 
-## Faculty
-- Reading group manager: Le-Rong Hsu 
-- Notes contributors:
-  - Le-Rong Hsu (RNN and LSTM/Autoencoder/GAN)
-  - De-Jin Huang (Neural Networks)
-- Programming assignment contributors:
-  - Le-Rong Hsu (CNN/Autoencoder/GAN/Signature)
-
-
-Best, 
 
 Le-Rong Hsu
 
