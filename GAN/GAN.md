@@ -31,3 +31,23 @@ The loss of discriminator usually defined as
 ```math
 J^D(\theta^D,\theta^G) = -\frac{1}{2}\mathbb{E}_{x\sim \mathbb{P}_{data}} \log D(x) -\frac{1}{2}\mathbb{E}_z \log (1-D(G(z))).
 ```
+- $\log$: avoid long precision
+- $D(x)$: the probability that $x$ is real
+- $1-D(G(z))$: the probaility that $D$ tells $z$ is fake, i.e. $D$ is not deceived by $G$
+- If the probability is close to 1, then the loss is small.
+
+GAN itself is a zero-sum game. Thus, we'll naturally define $J^G$ as 
+```math
+J^G=-J^D.
+```
+In this case, we can describe GAN by $V(\theta^G,\theta^D)=-J^D(\theta^G,\theta^D)$, and the optimal generator is thus
+```math
+\theta^{G^*}=\arg\min_{\theta^G}\max_{\theta^D} V(\theta^G,\theta^D).
+```
+However, if we define the loss of $G$ in this way, we may encounter gradient vanishing. In the beginning of training, the generator is poor and the discriminator can tell fake samples easily, resulting in small gradient. The generator cannot improve efficiently, and the training of GAN may be very slow.
+
+Recall that **the gradient points to the maximum of the function**. With this in mind, we can use another equivalent loss:
+```math
+J^G=-\mathbb{E}_z[\log D(G(z))].
+```
+$G(z)$ is the probability that $D$ is deceived, believing that $G(z)$ is a real sample. 
