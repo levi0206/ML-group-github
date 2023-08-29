@@ -50,4 +50,11 @@ Recall that **the gradient points to the maximum of the function**. With this in
 ```math
 J^G=-\mathbb{E}_z[\log D(G(z))].
 ```
-$G(z)$ is the probability that $D$ is deceived, believing that $G(z)$ is a real sample. 
+$G(z)$ is the probability that $D$ is deceived, believing that $G(z)$ is a real sample. When $D$ can tell fake samples with high confidence (high probability), then the probability $D(G(z))$ is small and the loss $J^G$ is large. The gradient is also larger than before if $G$ is poor. 
+
+## Training
+The general training algorithm is as below:
+![image alt](https://github.com/levi0206/ML-group-github/blob/88f793b2eddaeca829bd4e0d57c3e371001c5507/image/general%20GAN%20training.png)
+(Replace $L_G$ and $L_D$ by $J^G$ and $J^D$)
+
+We have to calucate the gradient of loss to update our parameters. However, it's intractable to calculate the expectation; calculating the gradient is easier.  
