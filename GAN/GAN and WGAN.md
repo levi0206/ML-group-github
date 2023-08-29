@@ -1,12 +1,13 @@
 # Generative Adversarial Networks
 GAN and WGAN
-## Motivation
+## GAN 
+### Motivation
 - Model-based reinforcement learning
   - In reinforcement learning, the purpose of model is to simulate our environment and generate samples for the training of agent.  
 - Simulate possible futures
   - We could perform regression on these simulations to predict the future events or find the optimal strategy.
  
-## Framework
+### Framework
 There are two roles in GAN: **generator** and **discriminator**. They are usually neural networks respectively.
 - Generator:
   - The counterfeiter trying to make fake currency
@@ -20,7 +21,7 @@ There are two roles in GAN: **generator** and **discriminator**. They are usuall
 Their interaction can be illustrated as below:
 ![image alt](https://github.com/levi0206/Machine-Learning-Topics/blob/9d9d5d572ed5370a824958249e3debe9abad41f6/image/GAN%20in%20a%20nutshell.png)
 
-## Loss Functions
+### Loss Functions
 Designing the loss functions of generator and discriminator is a critical part of GAN. The inappropriate choice of loss functions would make the convergence of GAN much more difficult. 
 
 Let $\theta^G$ and $\theta^D$ be the parameters of generator and discriminator. Let $J^G( \theta^G,\theta^D)$ and $J^D( \theta^G,\theta^D)$ be the loss functions of generator and discriminator. An interesting fact is that all of the different games designed for GANs so far use the same cost for
@@ -52,7 +53,7 @@ J^G=-\mathbb{E}_z[\log D(G(z))].
 ```
 $G(z)$ is the probability that $D$ is deceived, believing that $G(z)$ is a real sample. When $D$ can tell fake samples with high confidence (high probability), then the probability $D(G(z))$ is small and the loss $J^G$ is large. The gradient is also larger than before if $G$ is poor. 
 
-## Training
+### Training
 The general training algorithm is:
 ![image alt](https://github.com/levi0206/ML-group-github/blob/88f793b2eddaeca829bd4e0d57c3e371001c5507/image/general%20GAN%20training.png)
 (Replace $L_G$ and $L_D$ by $J^G$ and $J^D$)
@@ -94,3 +95,14 @@ $\nabla \log D(x)$ and $\nabla \log D(G(z))$ can be calculated with **backpropag
 The more detained training algorithm is like:
 ![image alt](https://github.com/levi0206/ML-group-github/blob/d0f1833e2087c95d5c57e05e50e1af0084977642/image/GAN%20training%20algorithm.png)
 After calculating the gradient of loss, we can update parameters by applying different optizers such as Adam, RMSProp and so on. 
+
+## WGAN
+### Likelihood and KL Divergence
+Let's see generative models in a different way. For generative models, we want to
+- maximize the **likelihood** of our training data, that is, to generate training data as possible.
+Or we can say we want to
+- minimize the **distance** of the two distributions.
+
+**What is likelihood?**
+
+Image that 
