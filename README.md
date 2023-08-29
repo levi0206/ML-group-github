@@ -14,4 +14,7 @@ For programming assignment contributors, please provide your environment setting
 
 There's no restriction to the packages you use. You can use any package you want to use. Feel free to add comments for clarity. 
 
+## Images
+It's okay to take screenshots when you're lazy typing complicated markdown code. Please add your images to the folder `image` with identifiable name. 
+
 
