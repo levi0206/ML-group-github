@@ -1,6 +1,6 @@
 # Machine Learning Reading Group
 
-Website: [https://levi0206.github.io/ML-group.github.io/](https://levi0206.github.io/ML-group.github.io/)
+Website: 
 
 Meeting schedule: every Tuesday 19:00-20:00, starting from 9/5 2023. 
 
