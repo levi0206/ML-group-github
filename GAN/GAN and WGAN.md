@@ -105,4 +105,48 @@ Or we can say we want to
 
 **What is likelihood?**
 
-Image that 
+Consider the senario that 
+- there are 10 people
+- the probabiity that one gets infected is $\theta$
+- each person is independent.
+
+Then the probability of **4 people get infected** is
+```math
+\mathbb{P}(X=4|\theta)= {10\choose 4}\theta^4(1-\theta)^6.
+```
+**What is the $\theta$ that maximizes the probability?**
+
+Likelihood,
+```math
+L(\theta|X=4)=\mathbb{P}(X=4|\theta),
+```
+is **a function of $\theta$**, **determining the probability of the observation ($X$=4)**. Once $\theta$ is chosen, the probability is determined. Thus, the **maximum likelihood** is 
+```math
+\arg\max_{\theta} L(\theta|X=4).
+```
+For generative models, the **training data** $x^1,x^2,...,x^m$ is our observation. We want to maximize the likelihood of our training data. Likelihood here is **the probability that the model assigns to the training data** $\Pi_{i=1}^m \mathbb{P}_{model}(x^i;\theta)$. 
+```math
+\begin{aligned}
+\theta^* & = \arg\max_{\theta}\Pi_{i=1}^m \mathbb{P}_{model}(x^i;\theta) \\
+    & = \arg\max_{\theta} \Sigma_{i=1}^m \log \mathbb{P}_{model}(x^i;\theta).
+\end{aligned}
+```
+The **divergence** can be intuitively thought as the "distance" of two probability distribution. **KL-divergence** is defined by
+```math
+\begin{aligned}
+KL(p||q)& \dot{=}\int_{-\infty}^{\infty} p(x)\log\frac{p(x)}{q(x)}d\mu(x)\\
+    & = \mathbb{E}_{x\sim p(x)} \log\frac{p(x)}{q(x)}.
+\end{aligned}
+```
+**What's the relation between likelihood and KL divrgence**? Let's look at the proposition:
+
+**Proposition** Minimizing KL divergence is equivalent to maximizing likelihood.
+```math
+\begin{aligned}
+    & \arg\min_{\hat{\theta}} KL(p(x|\theta^*) || p(x|\hat{\theta})) \\
+    & = \arg\min_{\hat{\theta}} \mathbb{E}_{x\sim p(x|\theta^*)} \left[\log\frac{p(x|\theta^*)}{p(x|\hat{\theta})}\right] \\
+    & = \arg\min_{\hat{\theta}} \mathbb{E}_{x\sim p(x|\theta^*)}\left[\log p(x|\theta^*)-\log p(x|\hat{\theta})\right] \\
+    & = \arg\min_{\hat{\theta}} \mathbb{E}_{x\sim p(x|\theta^*)}\left[-\log p(x|\hat{\theta})\right] \\
+    & = \arg\max_{\hat{\theta}} \mathbb{E}_{x\sim p(x|\theta^*)}\left[\log p(x|\hat{\theta})\right]
+\end{aligned}
+```
