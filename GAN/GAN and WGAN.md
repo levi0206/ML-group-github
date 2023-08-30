@@ -150,3 +150,10 @@ KL(p||q)& \dot{=}\int_{-\infty}^{\infty} p(x)\log\frac{p(x)}{q(x)}d\mu(x)\\
     & = \arg\max_{\hat{\theta}} \mathbb{E}_{x\sim p(x|\theta^*)}\left[\log p(x|\hat{\theta})\right]
 \end{aligned}
 ```
+
+The optimal parameters $\theta^\*$ is independent of the $\hat{\theta}$, so the equation holds if we get rid of $\log p(x|\theta^*)$. 
+
+### Motivation
+We've shown that minimizing KL divergence is equivalent to maximizing likelihood. Can we simply calculate KL divergence, calculate the gradient of KL divergence, and then update model parameters with gradient? The answer is no if we use KL divergence. 
+
+**Theorem** A sequence of distributions $\mathbb{P}_t$ converges with respect to $\rho$ if and only if there exists a distribution $\mathbb{P}_{\infty}$ such that $\rho(\mathbb{P}_t,\mathbb{P}_{\infty})\to 0$ as $t\to\infty$. 
