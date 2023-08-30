@@ -156,11 +156,22 @@ The optimal parameters $\theta^\*$ is independent of the $\hat{\theta}$, so the 
 ### Motivation
 We've shown that minimizing KL divergence is equivalent to maximizing likelihood. Can we simply calculate KL divergence, calculate the gradient of KL divergence, and then update model parameters with gradient? The answer is no if we use KL divergence. 
 
-**Theorem** A sequence of distributions $`\mathbb{P}_t`$ converges with respect to $\rho$ if and only if there exists a distribution $\mathbb{P}_{\infty}$ such that $`\rho(\mathbb{P}_t,\mathbb{P}_{\infty})\to 0`$ as $t\to\infty$. Does such divergence exist? Yes, **Earth-Mover** (EM) distance or **Wasserstein-1** ($W_1$) distance has silimar property. $W_1$ distance is defined as
+Let $\mathcal{X}$ be a compact metric space. In the following discussion, we only consider the probability measures on $\mathcal{X}$.
+
+**Theorem** A sequence of distributions $`\mathbb{P}_t`$ converges with respect to $\rho$ if and only if there exists a distribution $\mathbb{P}_{\infty}$ such that $`\rho(\mathbb{P}_t,\mathbb{P}_{\infty})\to 0`$ as $t\to\infty$. 
+
+Does such divergence exist? Yes, **Earth-Mover** (EM) distance or **Wasserstein-1** ($W_1$) distance has silimar property. $W_1$ distance is defined as
 ```math
 W(\mathbb{P}_r,\mathbb{P}_g)=\inf_{\gamma\sim\Pi(\mathbb{P}_r,\mathbb{P}_g)} \mathbb{E}_{(x,y)\sim\gamma}\left[||x-y||\right].
 ```
-where $\Pi(\mathbb{P}_r,\mathbb{P}_g)$ denotes the set of all joint distributions $\gamma(x,y)$ whose marginals are respectively $\mathbb{P}_r$ and $\mathbb{P}_g$. Intuitively, $\gamma(x,y)$ indicates how much “mass” must be transported from $x$ to $y$ in order to transform the distributions $\mathbb{P}_r$ into the distribution $\mathbb{P}_g$. The EM distance then is the “**cost**” of the optimal transport plan.
+where $\Pi(\mathbb{P}_r,\mathbb{P}_g)$ denotes the set of all joint distributions $\gamma(x,y)$ whose marginals are respectively $\mathbb{P}_r$ and $\mathbb{P}_g$, that is, 
+```math
+\begin{aligned}
+& \int_{\mathcal{X}} \gamma(x,y)dy=\mathbb{P}_g \\
+& \int_{\mathcal{X}} \gamma(x,y)dx=\mathbb{P}_r.
+\end{aligned}
+```
+Intuitively, $\gamma(x,y)$ indicates how much “mass” must be transported from $x$ to $y$ in order to transform the distributions $\mathbb{P}_r$ into the distribution $\mathbb{P}_g$. The EM distance then is the “**cost**” of the optimal transport plan.
 
 We'll compare $W_1$ distance with other popular distances. 
 
@@ -187,7 +198,7 @@ In this case,
 
 $W_1$ distance: $`W(\mathbb{P}_0,\mathbb{P}_{\theta})=|\theta|`$
 
-**proof**: The joint distribution of 
+**Proof**: 
 
 
 JS divergence:
@@ -206,3 +217,8 @@ TV distance:
         0 & \theta=0
         \end{cases}
 ```
+**Proof**: Recall that 
+```math
+\mathbb{P}_r(A)=\int_A \mathbb{P}_r(x)d\mu(x).
+```
+If $\theta=0$, then $`\sup_{A\in\Sigma} |\mathbb{P}_0(A)-\mathbb{P}_{\theta}(A)|=|(0,A)-(0,A)|=0`$. 
