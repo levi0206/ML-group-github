@@ -156,4 +156,8 @@ The optimal parameters $\theta^\*$ is independent of the $\hat{\theta}$, so the 
 ### Motivation
 We've shown that minimizing KL divergence is equivalent to maximizing likelihood. Can we simply calculate KL divergence, calculate the gradient of KL divergence, and then update model parameters with gradient? The answer is no if we use KL divergence. 
 
-**Theorem** A sequence of distributions $\mathbb{P}_t$ converges with respect to $\rho$ if and only if there exists a distribution $\mathbb{P}_{\infty}$ such that $\rho(\mathbb{P}_t,\mathbb{P}_{\infty})\to 0$ as $t\to\infty$. 
+**Theorem** A sequence of distributions $`\mathbb{P}_t`$ converges with respect to $\rho$ if and only if there exists a distribution $\mathbb{P}_{\infty}$ such that $`\rho(\mathbb{P}_t,\mathbb{P}_{\infty})\to 0`$ as $t\to\infty$. Does such divergence exist? Yes, **Earth-Mover** (EM) distance or **Wasserstein-1** ($W_1$) distance has silimar property. $W_1$ distance is defined as
+```math
+W(\mathbb{P}_r,\mathbb{P}_g)=\inf_{\gamma\sim\Pi(\mathbb{P}_r,\mathbb{P}_g)} \mathbb{E}_{(x,y)\sim\gamma}\left[||x-y||\right].
+```
+
