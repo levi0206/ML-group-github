@@ -184,4 +184,25 @@ We'll compare $W_1$ distance with other popular distances.
 Let $Z\sim U[0,1]$ the uniform distribution on the unit interval. Let $`\mathbb{P}_0`$ be the distribution of $(0,Z) \in \mathbb{R}^2$ (a $0$ on the x-axis and the random variable $Z$ on the y-axis), uniform on a straight vertical line passing through the origin. Let $g_{\theta}(z) = (\theta,z)$ with $\theta$ a single real parameter. Let $`\mathbb{P}_{\theta}`$ be the distribution of $`g_{\theta}`$.
 
 In this case,
-- $W(\mathbb{P}_0,\mathbb{P}_g)=|\theta|$
+
+$W_1$ distance: $`W(\mathbb{P}_0,\mathbb{P}_{\theta})=|\theta|`$
+
+**proof**: The joint distribution of 
+
+
+JS divergence:
+```math
+JS(\mathbb{P}_0,\mathbb{P}_{\theta})=
+        \begin{cases}
+        \log 2 & \text{if }\theta\neq 0 \\
+        0 & \theta=0
+        \end{cases}
+```
+TV distance:
+```math
+\delta(\mathbb{P}_0,\mathbb{P}_{\theta})=
+        \begin{cases}
+        1 & \text{if }\theta\neq 0 \\
+        0 & \theta=0
+        \end{cases}
+```
