@@ -160,4 +160,23 @@ We've shown that minimizing KL divergence is equivalent to maximizing likelihood
 ```math
 W(\mathbb{P}_r,\mathbb{P}_g)=\inf_{\gamma\sim\Pi(\mathbb{P}_r,\mathbb{P}_g)} \mathbb{E}_{(x,y)\sim\gamma}\left[||x-y||\right].
 ```
+where $\Pi(\mathbb{P}_r,\mathbb{P}_g)$ denotes the set of all joint distributions $\gamma(x,y)$ whose marginals are respectively $\mathbb{P}_r$ and $\mathbb{P}_g$. Intuitively, $\gamma(x,y)$ indicates how much “mass” must be transported from $x$ to $y$ in order to transform the distributions $\mathbb{P}_r$ into the distribution $\mathbb{P}_g$. The EM distance then is the “**cost**” of the optimal transport plan.
+
+We'll compare $W_1$ distance with other popular distances. 
+
+**KL divergence**
+  ```math
+  KL(\mathbb{P}_r || \mathbb{P}_g)=\int \log\frac{P_r(x)}{P_g(x)}P_r(x)d\mu(x)
+  ```
+  
+**Jensen-Shannon** (JS) divergence
+  ```math
+  JS(\mathbb{P}_r,\mathbb{P}_g)=KL(\mathbb{P}_r||\mathbb{P}_m)+KL(\mathbb{P}_g||\mathbb{P}_m)
+  ```
+  
+**Total Variation** (TV) distance
+  ```math
+  \delta(\mathbb{P}_r,\mathbb{P}_g)=\sup_{A\in\Sigma} |\mathbb{P}_r(A)-\mathbb{P}_g(A)|
+  ```
+  $\Sigma$ denote the set of all the Borel subsets of a compact metric set $\mathcal{X}$.
 
