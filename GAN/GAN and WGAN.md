@@ -180,3 +180,8 @@ We'll compare $W_1$ distance with other popular distances.
   ```
   $\Sigma$ denote the set of all the Borel subsets of a compact metric set $\mathcal{X}$.
 
+**Example** 
+Let $Z\sim U[0,1]$ the uniform distribution on the unit interval. Let $`\mathbb{P}_0`$ be the distribution of $(0,Z) \in \mathbb{R}^2$ (a $0$ on the x-axis and the random variable $Z$ on the y-axis), uniform on a straight vertical line passing through the origin. Let $g_{\theta}(z) = (\theta,z)$ with $\theta$ a single real parameter. Let $`\mathbb{P}_{\theta}`$ be the distribution of $`g_{\theta}`$.
+
+In this case,
+- $W(\mathbb{P}_0,\mathbb{P}_g)=|\theta|$
