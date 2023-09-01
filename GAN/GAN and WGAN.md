@@ -218,7 +218,7 @@ KL(\mathbb{P}_0||\mathbb{P}_{\theta})=\mathbb{P}_0(0)\log\frac{\mathbb{P}_0(0)}{
 ```
 For $\theta=0$, 
 ```math
-KL(\mathbb{P}_0||\mathbb{P}_{\theta})=\mathbb{P}_0(0)\log\frac{\mathbb{P}_0(0)}{\mathbb{P}_{\theta}(0)}=1\log\frac{1}{1}=0.
+KL(\mathbb{P}_0||\mathbb{P}_{\theta})=\mathbb{P}_0(0)\log\frac{\mathbb{P}_0(0)}{\mathbb{P}_{\theta}(0)}=\mathbb{P}_0(\theta)\log\frac{\mathbb{P}_0(\theta)}{\mathbb{P}_{\theta}(\theta)}=1\log\frac{1}{1}=0.
 ```
 Similar calculation for $`KL(\mathbb{P}_{\theta}||\mathbb{P}_0)\blacksquare`$.
 
