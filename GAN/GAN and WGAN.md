@@ -156,7 +156,7 @@ The optimal parameters $\theta^\*$ is independent of the $\hat{\theta}$, so the 
 ### Motivation
 We've shown that minimizing KL divergence is equivalent to maximizing likelihood. Can we simply calculate KL divergence, calculate the gradient of KL divergence, and then update model parameters with gradient? The answer is no if we use KL divergence. 
 
-Let $\mathcal{X}$ be a compact metric space. In the following discussion, we only consider the probability measures on $\mathcal{X}$.
+Let $\mathcal{X}$ be a compact metric space. In the following discussion, we only consider the probability measures defined on $\mathcal{X}$.
 
 **Theorem** A sequence of distributions $`\mathbb{P}_t`$ converges with respect to $\rho$ if and only if there exists a distribution $\mathbb{P}_{\infty}$ such that $`\rho(\mathbb{P}_t,\mathbb{P}_{\infty})\to 0`$ as $t\to\infty$. 
 
@@ -189,7 +189,7 @@ We'll compare $W_1$ distance with other popular distances.
   ```math
   \delta(\mathbb{P}_r,\mathbb{P}_g)=\sup_{A\in\Sigma} |\mathbb{P}_r(A)-\mathbb{P}_g(A)|
   ```
-  $\Sigma$ denote the set of all the Borel subsets of a compact metric set $\mathcal{X}$.
+  $\Sigma$ denotes the set of all the Borel subsets of a compact metric set $\mathcal{X}$.
 
 **Example** 
 Let $Z\sim U[0,1]$ the uniform distribution on the unit interval. Let $`\mathbb{P}_0`$ be the distribution of $(0,Z) \in \mathbb{R}^2$ (a $0$ on the x-axis and the random variable $Z$ on the y-axis), uniform on a straight vertical line passing through the origin. Let $g_{\theta}(z) = (\theta,z)$ with $\theta$ a single real parameter. Let $`\mathbb{P}_{\theta}`$ be the distribution of $`g_{\theta}`$.
@@ -200,6 +200,27 @@ $W_1$ distance: $`W(\mathbb{P}_0,\mathbb{P}_{\theta})=|\theta|`$
 
 **Proof**: 
 
+KL divergence:
+```math
+KL(\mathbb{P}_0||\mathbb{P}_{\theta})=KL(\mathbb{P}_{\theta}||\mathbb{P}_0)
+    \begin{cases}
+        \infty & \text{if }\theta\neq 0 \\
+        0 & \theta=0
+    \end{cases}
+```
+**Proof**: 
+```math
+KL(\mathbb{P}_0||\mathbb{P}_{\theta})=
+```
+If $\theta\neq 0$,
+```math
+KL(\mathbb{P}_0||\mathbb{P}_{\theta})=\mathbb{P}_0(0)\log\frac{\mathbb{P}_0(0)}{\mathbb{P}_{\theta}(0)}+\mathbb{P}_0(\theta)\log\frac{\mathbb{P}_0(\theta)}{\mathbb{P}_{\theta}(\theta)}=1\log\frac{1}{0}+0\log\frac{0}{1}=+\infty.
+```
+For $\theta=0$, 
+```math
+KL(\mathbb{P}_0||\mathbb{P}_{\theta})=\mathbb{P}_0(0)\log\frac{\mathbb{P}_0(0)}{\mathbb{P}_{\theta}(0)}=1\log\frac{1}{1}=0.
+```
+Similar calculation for $`KL(\mathbb{P}_{\theta}||\mathbb{P}_0)\blacksquare`$.
 
 JS divergence:
 ```math
@@ -209,6 +230,8 @@ JS(\mathbb{P}_0,\mathbb{P}_{\theta})=
         0 & \theta=0
         \end{cases}
 ```
+**Proof**: 
+
 TV distance:
 ```math
 \delta(\mathbb{P}_0,\mathbb{P}_{\theta})=
@@ -221,4 +244,11 @@ TV distance:
 ```math
 \mathbb{P}_r(A)=\int_A \mathbb{P}_r(x)d\mu(x).
 ```
-If $\theta=0$, then $`\sup_{A\in\Sigma} |\mathbb{P}_0(A)-\mathbb{P}_{\theta}(A)|=|(0,A)-(0,A)|=0`$. 
+$`\mathbb{P}_0`$ and $`\mathbb{P}_{\theta}`$ are defined on $`\mathbb{R}^2`$ and are non-zero on $x=0$ and $x=\theta$ respectively. For each $y\in\mathbb{R}$, $`\{(x,y) | x\in\mathbb{R}\}`$ is a Borel subset. If $\theta=0$, then $`\mathbb{P}_0=\mathbb{P}_{\theta}`$ and $`\delta(\mathbb{P}_0,\mathbb{P}_{\theta})=0`$. For $\theta\neq 0$, 
+```math
+\delta(\mathbb{P}_0,\mathbb{P}_{\theta})_{x=0}=|1-0|=1,
+```
+and 
+```math
+\delta(\mathbb{P}_0,\mathbb{P}_{\theta})_{x=\theta}=|0-1|=1. \blacksquare
+```
