@@ -194,13 +194,16 @@ where $`\mathbb{P}_m=\frac{\mathbb{P}_r+\mathbb{P}_g}{2}`$.
   $\Sigma$ denotes the set of all the Borel subsets of a compact metric set $\mathcal{X}$.
 
 **Example** 
-Let $Z\sim U[0,1]$ the uniform distribution on the unit interval. Let $`\mathbb{P}_0`$ be the distribution of $(0,Z) \in \mathbb{R}^2$ (a $0$ on the x-axis and the random variable $Z$ on the y-axis), uniform on a straight vertical line passing through the origin. Let $g_{\theta}(z) = (\theta,z)$ with $\theta$ a single real parameter. Let $`\mathbb{P}_{\theta}`$ be the distribution of $`g_{\theta}`$.
+Let $Z\sim U[0,1]$ the uniform distribution on the unit interval. Let $`\mathbb{P}_0`$ be the distribution of $(0,Z) \in \mathbb{R}^2$ (a $0$ on the x-axis and the random variable $Z$ on the y-axis), uniform on a straight vertical line passing through the origin. Let $g_{\theta}(z) = (\theta,z)$ with $\theta$ a single real parameter. Let $`\mathbb{P}_{\theta}`$ be the distribution of $`g_{\theta}`$. In this case,
 
-In this case,
 
 $W_1$ distance: $`W(\mathbb{P}_0,\mathbb{P}_{\theta})=|\theta|`$
 
-**Proof**: 
+**Proof**: Let $`x\sim\mathbb{P}_0`$, $`y\sim\mathbb{P}_{\theta}`$ and $`\gamma`$ be a joint distribution of $`\mathbb{P}_0`$ and $`\mathbb{P}_{\theta}`$. No matter what $\gamma$ is, $`\|x-y\|`$ is always $`\theta\`$. $`\theta`$ is a constant with respect to $\gamma$, and the expectation of a probability distribution is always 1. Thus,
+```math
+\mathbb{E}_{(x,y)\sim\gamma} |\theta|=\int_{\omega\in\mathcal{X}} |\theta| d\omega = |\theta| \int_{\omega\in\mathcal{X}}d\omega=\|\theta\|\blacksquare
+```
+
 
 KL divergence:
 ```math
@@ -267,3 +270,4 @@ and
 ```math
 \delta(\mathbb{P}_0,\mathbb{P}_{\theta})_{x=\theta}=|0-1|=1. \blacksquare
 ```
+**What can we learn from this example?** We know that we can learn a probability distribution over a low dimensional manifold by doing gradient descent on the $`W_1`$ distance. This cannot be done with the other distances and divergences because the resulting loss function is not even continuous.
