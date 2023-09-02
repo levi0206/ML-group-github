@@ -239,13 +239,13 @@ JS(\mathbb{P}_0,\mathbb{P}_{\theta})=
 For $`\theta=0`$, $`\frac{\mathbb{P}_0+\mathbb{P}_{\theta}}{2}=\mathbb{P}_0`$, so JS divergence is 0. Suppose $\theta\neq 0$. 
 ```math
 \begin{aligned}
-& \int_{y\in[0,1]} \mathbb{P}_0(0,y)\log\frac{\mathbb{P}_0(0,y)}{\frac{\mathbb{P}_0(0,y)+\mathbb{P}_{\theta}}(0,y)}{2}} \\
+& \int_{y\in[0,1]} \mathbb{P}_0(0,y)\log\frac{\mathbb{P}_0(0,y)}{\frac{\mathbb{P}_0(0,y)+\mathbb{P}_{\theta}(0,y)}{2}} \\
 & = \int_{y\in[0,1]} \mathbb{P}_0(0,y)\log\frac{\mathbb{P}_0(0,y)}{\frac{\mathbb{P}_0(0,y)+0}{2}} \\
 & = \int_{y\in[0,1]} \mathbb{P}_0(0,y)\log 2 \\
 & = \log 2,
 \end{aligned}
 ```
-and the calculation is similar for 
+and the calculation is similar for $`KL(\mathbb{P}_{\theta} || \frac{\mathbb{P}_0+\mathbb{P}_{\theta}}{2})\blacksquare`$.
 
 TV distance:
 ```math
