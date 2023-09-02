@@ -156,7 +156,7 @@ The optimal parameters $\theta^\*$ is independent of the $\hat{\theta}$, so the 
 ### Motivation
 We've shown that minimizing KL divergence is equivalent to maximizing likelihood. Can we simply calculate KL divergence, calculate the gradient of KL divergence, and then update model parameters with gradient? The answer is no if we use KL divergence. 
 
-Let $\mathcal{X}$ be a compact metric space. In the following discussion, we only consider the probability measures defined on $\mathcal{X}$.
+Let $\mathcal{X}$ be a compact metric space such as $`[0,1]^d`$. In the following discussion, we only consider the probability measures defined on $\mathcal{X}$. We can view $\mathcal{X}$ as the sample space.
 
 **Theorem** A sequence of distributions $`\mathbb{P}_t`$ converges with respect to $\rho$ if and only if there exists a distribution $\mathbb{P}_{\infty}$ such that $`\rho(\mathbb{P}_t,\mathbb{P}_{\infty})\to 0`$ as $t\to\infty$. 
 
@@ -179,11 +179,13 @@ We'll compare $W_1$ distance with other popular distances.
   ```math
   KL(\mathbb{P}_r || \mathbb{P}_g)=\int \log\frac{P_r(x)}{P_g(x)}P_r(x)d\mu(x)
   ```
+where both $\mathbb{P}_r$ and $\mathbb{P}_g$ are assumed to be absolutely continuous, and therefore admit **densities**, with respect to a same measure $\mu$ defined on $\mathcal{X}$. 
   
 **Jensen-Shannon** (JS) divergence
   ```math
   JS(\mathbb{P}_r,\mathbb{P}_g)=KL(\mathbb{P}_r||\mathbb{P}_m)+KL(\mathbb{P}_g||\mathbb{P}_m)
   ```
+where $`\mathbb{P}_m=\frac{\mathbb{P}_r+\mathbb{P}_g}{2}`$.
   
 **Total Variation** (TV) distance
   ```math
@@ -210,15 +212,15 @@ KL(\mathbb{P}_0||\mathbb{P}_{\theta})=KL(\mathbb{P}_{\theta}||\mathbb{P}_0)
 ```
 **Proof**: 
 ```math
-KL(\mathbb{P}_0||\mathbb{P}_{\theta})=
+\begin{aligned}
+KL(\mathbb{P}_0||\mathbb{P}_{\theta}) & =\int_{\omega\in\mathcal{X}} \mathbb{P}_0(\omega)\log\frac{\mathbb{P}_0(\omega)}{\mathbb{P}_{\theta}(\omega)}=\int_{(x,y)\in\mathbb{R}^2} \mathbb{P}_0(x,y)\log\frac{\mathbb{P}_0(x,y)}{\mathbb{P}_{\theta}(x,y)} \\ & = \int_{(x,y)\in [0,\theta]\times [0,1]} \mathbb{P}_0(x,y)\log\frac{\mathbb{P}_0(x,y)}{\mathbb{P}_{\theta}(x,y)} = \int_{y\in[0,1]} \mathbb{P}_0(0,y)\log\frac{\mathbb{P}_0(0,y)}{\mathbb{P}_{\theta}(0,y)}+\int_{y\in[0,1]} \mathbb{P}_0(\theta,y)\log\frac{\mathbb{P}_0(\theta,y)}{\mathbb{P}_{\theta}(\theta,y)}
+\end{aligned}
 ```
-If $\theta\neq 0$,
-```math
-KL(\mathbb{P}_0||\mathbb{P}_{\theta})=\mathbb{P}_0(0)\log\frac{\mathbb{P}_0(0)}{\mathbb{P}_{\theta}(0)}+\mathbb{P}_0(\theta)\log\frac{\mathbb{P}_0(\theta)}{\mathbb{P}_{\theta}(\theta)}=1\log\frac{1}{0}+0\log\frac{0}{1}=+\infty.
-```
+If $\theta\neq 0$, $`\mathbb{P}_{\theta}(0,y)`$ and $\mathbb{P}_0(\theta,y)$ are always 0 for all $y\in[0,1]$. The first term is arbitrarily large (infinity) and the second term is 0, so KL divergence is $`+\infty`$.
+
 For $\theta=0$, 
 ```math
-KL(\mathbb{P}_0||\mathbb{P}_{\theta})=\mathbb{P}_0(0)\log\frac{\mathbb{P}_0(0)}{\mathbb{P}_{\theta}(0)}=\mathbb{P}_0(\theta)\log\frac{\mathbb{P}_0(\theta)}{\mathbb{P}_{\theta}(\theta)}=1\log\frac{1}{1}=0.
+KL(\mathbb{P}_0||\mathbb{P}_{\theta})=\int_{y\in[0,1]} \mathbb{P}_0(0,y)\log\frac{\mathbb{P}_0(0,y)}{\mathbb{P}_{\theta}(0,y)}=\int_{y\in[0,1]} \mathbb{P}_0(0,y)\log 1 = 0.
 ```
 Similar calculation for $`KL(\mathbb{P}_{\theta}||\mathbb{P}_0)\blacksquare`$.
 
@@ -231,6 +233,19 @@ JS(\mathbb{P}_0,\mathbb{P}_{\theta})=
         \end{cases}
 ```
 **Proof**: 
+```math
+  JS(\mathbb{P}_r,\mathbb{P}_g)=KL(\mathbb{P}_r||\mathbb{P}_m)+KL(\mathbb{P}_g||\mathbb{P}_m)
+  ```
+For $`\theta=0`$, $`\frac{\mathbb{P}_0+\mathbb{P}_{\theta}}{2}=\mathbb{P}_0`$, so JS divergence is 0. Suppose $\theta\neq 0$. 
+```math
+\begin{aligned}
+& \int_{y\in[0,1]} \mathbb{P}_0(0,y)\log\frac{\mathbb{P}_0(0,y)}{\frac{\mathbb{P}_0(0,y)+\mathbb{P}_{\theta}}(0,y)}{2}} \\
+& = \int_{y\in[0,1]} \mathbb{P}_0(0,y)\log\frac{\mathbb{P}_0(0,y)}{\frac{\mathbb{P}_0(0,y)+0}{2}} \\
+& = \int_{y\in[0,1]} \mathbb{P}_0(0,y)\log 2 \\
+& = \log 2,
+\end{aligned}
+```
+and the calculation is similar for 
 
 TV distance:
 ```math
