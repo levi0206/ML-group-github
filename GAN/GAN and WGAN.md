@@ -199,7 +199,7 @@ Let $Z\sim U[0,1]$ the uniform distribution on the unit interval. Let $`\mathbb{
 
 $W_1$ distance: $`W(\mathbb{P}_0,\mathbb{P}_{\theta})=|\theta|`$
 
-**Proof**: Let $`x\sim\mathbb{P}_0`$, $`y\sim\mathbb{P}_{\theta}`$ and $`\gamma`$ be a joint distribution of $`\mathbb{P}_0`$ and $`\mathbb{P}_{\theta}`$. No matter what $\gamma$ is, $`\|x-y\|`$ is always $`\theta\`$. $`\theta`$ is a constant with respect to $\gamma$, and the expectation of a probability distribution is always 1. Thus,
+**Proof**: Let $`x\sim\mathbb{P}_0`$, $`y\sim\mathbb{P}_{\theta}`$ and $`\gamma`$ be a joint distribution of $`\mathbb{P}_0`$ and $`\mathbb{P}_{\theta}`$. No matter what $\gamma$ is, $`\|x-y\|`$ is always $`\theta`$. $`\theta`$ is a constant with respect to $\gamma$, and the expectation of a probability distribution is always 1. Thus,
 ```math
 \mathbb{E}_{(x,y)\sim\gamma} |\theta|=\int_{\omega\in\mathcal{X}} |\theta| d\omega = |\theta| \int_{\omega\in\mathcal{X}}d\omega=\|\theta\|\blacksquare
 ```
@@ -270,4 +270,49 @@ and
 ```math
 \delta(\mathbb{P}_0,\mathbb{P}_{\theta})_{x=\theta}=|0-1|=1. \blacksquare
 ```
-**What can we learn from this example?** We know that we can learn a probability distribution over a low dimensional manifold by doing gradient descent on the $`W_1`$ distance. This cannot be done with the other distances and divergences because the resulting loss function is not even continuous.
+What can we learn from this example? We know that we can learn a probability distribution over a low dimensional manifold by doing gradient descent on the $`W_1`$ distance. This cannot be done with the other distances and divergences because the resulting loss function is not even continuous.
+
+**Theorem** Let $`\mathbb{P}_r`$ be a fixed distribution over $`\mathcal{X}`$. Let $Z$ be a random variable (e.g Gaussian) over another space $\mathcal{Z}$. Let $g : \mathcal{Z} × \mathbb{R}^d \to \mathcal{X}$ be a function, that will be denoted $g_{\theta}(z)$ with $z$ the first coordinate and $\theta$ the second. Let $`\mathbb{P}_{\theta}`$ denote the distribution of $`g_{\theta}(Z)`$. Then,
+1. $g$ is continuous in $`\theta`$, and so is $`W(\mathbb{P}_0,\mathbb{P}_{\theta})`$.
+2. If $g$ is locally Lipschitz and satisfies regularity assumption 1, then $`W(\mathbb{P}_0,\mathbb{P}_{\theta})`$
+is continuous everywhere, and differentiable almost everywhere.
+3. Statements 1-2 are false for the Jensen-Shannon divergence $`JS(\mathbb{P}_0,\mathbb{P}_{\theta})`$ and all the KLs.
+
+**Corollary** Let $`g_{\theta}`$ be any feedforward neural network4 parameterized by $`\theta`$, and $`p(z)`$ a prior over $z$ such that $`\mathbb{E}_{z\sim p(z)}[\|z\|]<\infty`$ (e.g. Gaussian, uniform, etc.). Then assumption 1 is satisfied and therefore $`W(\mathbb{P}_0,\mathbb{P}_{\theta})`$ is continuous everywhere and differentiable almost everywhere.
+
+### WGAN
+By the Kantorovich-Rubinstein duality,
+```math
+    W(\mathbb{P}_r,\mathbb{P}_{\theta}) = \sup_{||f||_L\leq 1} \mathbb{E}_{x\sim\mathbb{P}_r}[f(x)]-\mathbb{E}_{x\sim\mathbb{P}_{\theta}}[f(x)].
+```
+If we replace $`\|f\|_L\leq 1$ by $\|f\|_L\leq K`$, then we end up with $`K\cdot W(\mathbb{P}_r,\mathbb{P}_{\theta})`$. The gradient is scaled but its direction does not change. Let $f_w$ denote the neural network with parameters $w$. We could consider solving
+```math
+    \max_{w\in\mathcal{W}} \mathbb{E}_{x\sim\mathbb{P}_r}[f_w(x)]-\mathbb{E}_{z\sim \mathbb{P}_z}[f_w(g_{\theta}(z))]
+```
+where we restrict the range of parameters. For example, we restrict $\mathcal{W}\in [-0.01,0.01]^l$ so that $\frac{\partial f_w}{\partial w_i}$ are bounded and the gradient is Lipschitz. If the supremum is attained for some $w\in\mathcal{W}$, then this process would yield a calculation of $`W(\mathbb{P}_0,\mathbb{P}_{\theta})`$ up to a multiplicative constant.
+
+***Theorem** Let $`\mathbb{P}_r`$ be any distribution. Let $`\mathbb{P}_{\theta}`$ be the distribution of $`g_{\theta}(Z)`$ with $Z$ a random variable with density $p$ and $`g_{\theta}`$ a function satisfying assumption 1. Then, there is a solution $`f \colon \mathcal{X} \to \mathbb{R}`$ to the problem
+```math
+\max_{||f||_L\leq 1} \mathbb{E}_{x\sim\mathbb{P}_r}[f(x)]-\mathbb{E}_{x\sim\mathbb{P}_{\theta}}[f(x)]
+```
+and we have
+```math
+\nabla_{\theta} W(\mathbb{P}_r,\mathbb{P}_{\theta})=-\mathbb{E}_{z\sim \mathbb{P}_z}[f_w(g_{\theta}(z))]
+```
+when both terms are well-defined.
+
+### Training
+This is the training algorithm in WGAN paper:
+![image alt](https://github.com/levi0206/ML-group-github/blob/df741c3178be1fde18a5a00c3e1c6e2bb9ec6f46/image/WGAN%20training.png)
+Note that
+- we clip the domain of parameters to enforce Lipchitz continuity
+- there's no $\log$ in loss functions
+- the output layer is `Linear` since the discriminator now is doing **regression** on two distances, not logistic regression. 
+
+### Comparison
+![image alt](https://github.com/levi0206/ML-group-github/blob/1594689990bcf9ac1b799a64713950fa80f38157/image/WGAN%20figure5.png)
+Algorithms trained with a DCGAN generator. Left: WGAN algorithm. Right: standard GAN formulation. Both algorithms produce high quality samples.
+![image alt](https://github.com/levi0206/ML-group-github/blob/1594689990bcf9ac1b799a64713950fa80f38157/image/WGAN%20figure6.png)
+ Algorithms trained with a generator without batch normalization and constant number of filters at every layer. Standard GAN failed to learn while the WGAN still was able to produce samples.
+ ![image alt](https://github.com/levi0206/ML-group-github/blob/1594689990bcf9ac1b799a64713950fa80f38157/image/WGAN%20figure7.png)
+ Algorithms trained with an MLP generator with 4 layers and 512 units with ReLU nonlinearities. WGAN: lower quality, GAN: worse quality and mode collapse
