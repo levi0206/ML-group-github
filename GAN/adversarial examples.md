@@ -10,6 +10,7 @@ Let $`\|\eta\|_{\infty}\leq\epsilon`$ where $`\epsilon`$ is smaller than the pre
 ```
 - $\mathbf{W}$: weight matrix
 - $`\mathbf{W}_j`$: weight vector of the current layer and the jth neuron in the next layer, $n$-dimensional
+  
 To quote the paper,
 > We can maximize $`\mathbf{W}^T_j\eta`$ subject to the max norm constraint on $\eta$ by assigning $`\eta=\text{sign}(\mathbf{w})`$.
 
