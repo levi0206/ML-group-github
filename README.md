@@ -2,7 +2,7 @@
 
 Website: [https://levi0206.github.io/mlreadinggroup/](https://levi0206.github.io/mlreadinggroup/)
 
-Meeting schedule: every Tuesday 19:00-20:00, starting from 9/5 2023. 
+Meeting schedule: Sunday 19:00-21:00
 
 ## Formatting
 If you're interested in contributing notes, ensure that your content is well-structured and covers motivation, frameworks, algorithms, intricate details and references. Feel free to incorporate key **mathematical theorems** along with insightful proofs, emphasizing the significance of each theorem and any unique techniques employed in the proofs. Additionally, when inserting images into your notes, please offer sufficient explanations for clarity. We especially focus on the **details**, **not simply the model structure and intuition**. Your notes should be written with **Markdown** (in convenience of editting).
