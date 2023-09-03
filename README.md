@@ -5,16 +5,14 @@ Website: [https://levi0206.github.io/mlreadinggroup/](https://levi0206.github.io
 Meeting schedule: Sunday 19:00-21:00
 
 ## Formatting
-If you're interested in contributing notes, ensure that your content is well-structured and covers motivation, frameworks, algorithms, intricate details and references. Feel free to incorporate key **mathematical theorems** along with insightful proofs, emphasizing the significance of each theorem and any unique techniques employed in the proofs. Additionally, when inserting images into your notes, please offer sufficient explanations for clarity. We especially focus on the **details**, **not simply the model structure and intuition**. Your notes should be written with **Markdown** (in convenience of editting).
+- Notes: Markdown
 
-For programming assignment contributors, please provide your environment setting in addition to your code, including:
-- computer architecture: x86_64, arm64, ...
-- operating system: windows10, windows11, macos big sur, linux, ...
-- packages versions, including: python, torch, tensorflow, matplotlob, numpy, ...
-
-There's no restriction to the packages you use. You can use any package you want to use. Feel free to add comments for clarity. 
+- Code: Please provide your environment setting in addition to your code, including:
+  - computer architecture: x86_64, arm64, ...
+  - operating system: windows10, windows11, macos big sur, linux, ...
+  -  packages versions, including: python, torch, tensorflow, matplotlob, numpy, ...
 
 ## Images
-It's okay to take screenshots when you're lazy typing complicated markdown code. Please add your images to the folder `image` with identifiable name. 
+Please add your images to the folder `image` with identifiable name. 
 
 
