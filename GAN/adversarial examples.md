@@ -114,16 +114,15 @@ Let's introduce a new random variable $Y$ an empirical distribution of the sampl
 & = \min_{\mathbf{w}} \mathbb{E}_{x\sim p_{data}} \zeta(-y_i(\mathbf{w}x_i+b_i)) \\
 \end{aligned}
 ```
-where $`\zeta(z)=\log(1+e^z)`$.
+where $`\zeta(z)=\log(1+e^z)`$ is the softplus function.
 
 Thus, our training consists of gradient descent on 
 ```math
 \begin{aligned}
-& -\sum \\
-& = \mathbb{E}_{\mathbf{x},y\sim p_{data}} \zeta\left(-y(\mathbf{w}^T\mathbf{x}+b)\right) \\
+& = \mathbb{E}_{\mathbf{x},y\sim p_{data}} \zeta\left(-y(\mathbf{w}^T\mathbf{x}+b)\right). 
 \end{aligned}
 ```
-where $`\zeta(z)=\log(1+e^x)`$ is the softplus function. We can derive a simple analytical form for training on the worst-case adversarial perturbation of $\mathbf{w}$ based on fast gradient sign method. The adversarial version of logistic regression is therefore to minimize
+We can derive a simple analytical form for training on the worst-case adversarial perturbation of $\mathbf{w}$ based on fast gradient sign method. The adversarial version of logistic regression is therefore to minimize
 ```math
 \begin{aligned}
 & \mathbb{E}_{\mathbf{x},y\sim p_{data}} \zeta\left(-y(-\epsilon\mathbf{w}^T\text{sign}(\mathbf{w})+\mathbf{w}^T\mathbf{x}+b)\right) \\
