@@ -7,32 +7,21 @@ In many problems, the precision of an individual input feature is limited. For d
 
 Let $`\|\eta\|_{\infty}\leq\epsilon`$ where $`\epsilon`$ is smaller than the precision of features. Consider the inner product between a weight maxtrix $\mathbf{W}$ and an adversarial example $`\tilde{x}`$:
 ```math
-\mathbf{W}_j\tilde{x}=\mathbf{W}_j x+\mathbf{W}_j\eta.
+\mathbf{W}^T_j\tilde{x}=\mathbf{W}^T_j x+\mathbf{W}_j^T\eta.
 ```
 - $\mathbf{W}$: weight matrix
-![image alt](https://github.com/levi0206/ML-group-github/blob/f21e5edd05917ff7ab13a68bf84040db145a70b1/image/weight%20matrix.png)
-```math
-\left[
-\begin{matrix}
-w_{11} & w_{12} & w_{13} \\
-w_{21} & w_{22} & w_{23} \\
-w_{31} & w_{32} & w_{33} \\
-w_{41} & w_{42} & w_{43} 
-\end{matrix}
-\right]
-```
-- $\mathbf{W}_j$: weight vector of the current layer to the jth neuon of the next layer, **$n$-dimensional row vector**
+- $\mathbf{W}_j$: weight vector of the current layer to the jth neuon of the next layer, **$n$-dimensional column vector**
   
 To quote the paper,
 > We can maximize $`\mathbf{W}_j\eta`$ subject to the max norm constraint on $\eta$ by assigning $`\eta=\text{sign}(\mathbf{W})`$.
 
 This is a typo. $\eta$ should be $`\eta=\epsilon\text{sign}(\mathbf{W}_j)`$. For example, if
 ```math
-\mathbf{W}_j=(0.1,-2,-3,0.5),
+\mathbf{W}_j=(0.1,-2,0,-3,0.5),
 ```
 then
 ```math
-\text{sign}(\mathbf{W}_j)=(1,-1,-1,1).
+\text{sign}(\mathbf{W}_j)=(1,-1,0,-1,1).
 ```
 - The `sign` function operates on each element of a vector, 1 for a positive value, -1 for a negative value.
 - Recall: The $`\|\cdot\|_{\infty}`$ of $v=(v_1,...,v_n)$ is defined by
@@ -45,7 +34,7 @@ Check: $`\|\eta\|=\epsilon\cdot 1=\epsilon`$.
 If the average magnitude (absolute value) of each element of $`\mathbf{W}_j`$ is $m$, then the activation will grow by $\epsilon m n$ approximately compared to $`\mathbf{W} x`$ when we choose `ReLU` as our activation. 
 ```math
 \begin{aligned}
-\mathbf{W}_j\eta & = \mathbf{W}_j\cdot\epsilon\text{sign}(\mathbf{W}_j) \\
+\mathbf{W}_j^T\eta & = \mathbf{W}^T_j\cdot\epsilon\text{sign}(\mathbf{W}_j) \\
                  & = \epsilon\cdot\sum_{j=1}^n |w_{ij}| \\
                  & \approx \epsilon m n
 \end{aligned}
@@ -70,9 +59,9 @@ As the title suggests, we could train our model with adversary, which makes it b
 Consider a logistic regression task on which we train our model to recognoze $`y\in\{0,1\}`$ with $`P(y=1)=\sigma(\mathbf{w}x+b)`$, $\sigma$ logistic sigmoid function, and $`P(y=-1)`$ 
 ```math
 \begin{aligned}
-P(y=-1) & = 1-\sigma(\mathbf{w}x+b) \\
-        & = 1-\frac{1}{1+e^{(-\mathbf{w}x+b)}} \\
-        & = \frac{e^{(-\mathbf{w}x+b)}}{1+e^{(-\mathbf{w}x+b)}}
+P(y=-1) & = 1-\sigma(\mathbf{w}^Tx+b) \\
+        & = 1-\frac{1}{1+e^{(-\mathbf{w}^Tx+b)}} \\
+        & = \frac{e^{(-\mathbf{w}^Tx+b)}}{1+e^{(-\mathbf{w}^Tx+b)}}
 \end{aligned}
 ```
 Since the sigmoid function has the property
@@ -81,7 +70,7 @@ Since the sigmoid function has the property
 ```
 we have $`P(y=-1)=\sigma(-(\mathbf{w}^Tx+b))`$. 
 
-Suppose we have $m$ training data points $`\{x_i,y_i\}_{i=1}^m`$ and write $`z_i=\mathbf{w}x_i+b_i`$. 
+Suppose we have $m$ training data points $`\{x_i,y_i\}_{i=1}^m`$ and write $`z_i=\mathbf{w}^Tx_i+b_i`$. 
 
 The log of $`P(y_i|x_i)`$ is
 ```math
@@ -100,18 +89,18 @@ Our goal is to minimize the log likelihood of training data
                                          & = \min_{\mathbf{w}} -\sum_{i=1}^m \log(P(y_i|x_i)) \\
                                          & = \min_{\mathbf{w}} -\sum_{i=1}^m -\log(1+e^{-z_i}) \\
                                          & = \min_{\mathbf{w}} \sum_{i=1}^m \log(1+e^{-z_i}) \\
-                                         & = \min_{\mathbf{w}} \sum_{i=1}^m \log(1+e^{-y_i(\mathbf{w}x_i+b_i)}) \\ 
+                                         & = \min_{\mathbf{w}} \sum_{i=1}^m \log(1+e^{-y_i(\mathbf{w}^Tx_i+b_i)}) \\ 
 \end{aligned}
 ```
 Let's introduce a new random variable $Y$ an empirical distribution of the sample. The above minimization is equivalent to
 ```math
 \begin{aligned}
-& \min_{\mathbf{w}} \sum_{i=1}^m \log(1+e^{-y_i(\mathbf{w}x_i+b_i)}) \\
-& = \min_{\mathbf{w}} m \sum_{i=1}^m \frac{1}{m}\log(1+e^{-y_i(\mathbf{w}x_i+b_i)}) \\
-& = \min_{\mathbf{w}} m \sum_{i=1}^m P(Y=x_i)\log(1+e^{-y_i(\mathbf{w}x_i+b_i)}) \\
-& = \min_{\mathbf{w}} m \mathbb{E}_{x\sim p_{data}} \log(1+e^{-y_i(\mathbf{w}x_i+b_i)}) \\
-& = \min_{\mathbf{w}} \mathbb{E}_{x\sim p_{data}} \log(1+e^{-y_i(\mathbf{w}x_i+b_i)}) \\
-& = \min_{\mathbf{w}} \mathbb{E}_{x\sim p_{data}} \zeta(-y_i(\mathbf{w}x_i+b_i)) \\
+& \min_{\mathbf{w}} \sum_{i=1}^m \log(1+e^{-y_i(\mathbf{w}^Tx_i+b_i)}) \\
+& = \min_{\mathbf{w}} m \sum_{i=1}^m \frac{1}{m}\log(1+e^{-y_i(\mathbf{w}^Tx_i+b_i)}) \\
+& = \min_{\mathbf{w}} m \sum_{i=1}^m P(Y=x_i)\log(1+e^{-y_i(\mathbf{w}^Tx_i+b_i)}) \\
+& = \min_{\mathbf{w}} m \mathbb{E}_{x\sim p_{data}} \log(1+e^{-y_i(\mathbf{w}^Tx_i+b_i)}) \\
+& = \min_{\mathbf{w}} \mathbb{E}_{x\sim p_{data}} \log(1+e^{-y_i(\mathbf{w}^Tx_i+b_i)}) \\
+& = \min_{\mathbf{w}} \mathbb{E}_{x\sim p_{data}} \zeta(-y_i(\mathbf{w}^Tx_i+b_i)) \\
 \end{aligned}
 ```
 where $`\zeta(z)=\log(1+e^z)`$ is the softplus function.
@@ -130,7 +119,14 @@ We can derive a simple analytical form for training on the worst-case adversaria
 & = \mathbb{E}_{\mathbf{x},y\sim p_{data}} \zeta\left(y(\epsilon\|\mathbf{w}\|_1-\mathbf{w}^T\mathbf{x}-b)\right)
 \end{aligned}
 ```
-
+This is somewhat similar to $L^1$ regularization. However, there are some important differences.
+$L^1$ penalty is added to the original lost function:
+```math
+\begin{aligned}
+NewLoss & = Loss+\lambda\|w_i\|_1 \\
+        & = Loss+\lambda\sum_{i=1}^n |w_i|
+\end{aligned}
+```
 
 ## Reference
 - [Explaining and Harnessing Adversarial Examples](https://arxiv.org/abs/1412.6572)
