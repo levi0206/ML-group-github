@@ -53,7 +53,9 @@ causes many models to misclassify their input, for example, GoogLeNet.
 ![image alt](https://github.com/levi0206/ML-group-github/blob/aaaeff18338dea0514f6e8fd90715a426ada979e/image/panda%20gibbon%20example.png)
 Figure 1: With $`\epsilon=0.007`$, the GoogLeNet misclassifies the image. The amount 0.007 corresponds to the magnitude of the smallest bit of an 8 bit image encoding after GoogLeNet’s conversion to real numbers.
 
-## Adversarial Training 
+You might question that why we choose the sign of gradient with respect to the input as our perturbation. Because the derivative of the sign function is zero or undefined everywhere, the model cannot anticipate how the adversary will react to changes in the parameters. If we choose rotation or addition of the scaled gradient, then the perturbation process is itself differentiable and is learnable by the model.
+
+## Adversarial Training vs Weight Decay
 As the title suggests, we could train our model with adversary, which makes it become **resistant to adversarial examples** and **regularizes** the model. It's worth noting that there's slight difference betweenn $L1$ regularization and adversrial training. 
 
 Consider a logistic regression task on which we train our model to recognoze $`y\in\{0,1\}`$ with $`P(y=1)=\sigma(\mathbf{w}x+b)`$, $\sigma$ logistic sigmoid function, and $`P(y=-1)`$ 
@@ -120,16 +122,36 @@ We can derive a simple analytical form for training on the worst-case adversaria
 \end{aligned}
 ```
 This is somewhat similar to $L^1$ regularization. However, there are some important differences.
-$L^1$ penalty is added to the original lost function:
+$L^1$ penalty is added to the original lost function
 ```math
 \begin{aligned}
 NewLoss & = Loss+\lambda\|w_i\|_1 \\
         & = Loss+\lambda\sum_{i=1}^n |w_i|
 \end{aligned}
 ```
+and $L^2$ penalty
+```math
+\begin{aligned}
+NewLoss & = Loss+\lambda\|w_i\|_1 \\
+        & = Loss+\lambda\sum_{i=1}^n w_i^2.
+\end{aligned}
+```
+The purpose of $L^1$ and $L^2$ regularization is to penalize the weights. During the optimization, we not only minimize the error but also control the weights so that the weights cannot be too large. The $L^1$ penalty starts to disappear when the model makes predictions that $\zeta$ saturates (the value of $\zeta$ is close to 1). This is not guaranteed in adversarial training--in the underfitting regime, adversarial training will simply worsen underfitting.
+
+## Adversarial Training on DNN
+The authors of [G,S,S] found that training with an adversarial objective function based on the fast gradient sign method was an effective regularizer
+```math
+\tilde{J}(\mathbf{x},\theta)=\alpha J(\mathbf{x},\theta)+(1-\alpha)J(\mathbf{x}+\epsilon\text{sign}(\nabla_xJ(\mathbf{x},\theta)),\theta).
+```
+Setting $`\alpha=0.5`$ means that we continually update our supply of adversarial examples, to make them resist the current version of the model. Using this approach to train a maxout network that was also regularized with dropout, they were able to reduce the error rate from 0.94% without adversarial training to 0.84% with adversarial training.
+
+The paper also provides the details about the experiments and tests which tries to answer why adversarial training could regularize the models, but we'll not cover them. A short conclusion is that the adversarial training does regularize our model.
+
+## Summary
+An adversarial example consists of a training sample and a perturbation that smaller than the precision of the features so that the classifier cannot tell the differences. When testing the model with adversarial examples, we can observe that our classifier does not "learn" well actually. It can be easily fooled by a slightly different samples. To generalize our model, we can train our model with adversary, called adversarial training. Researchers found this approach could regularize our model and prevent adversarial attack as well. 
 
 ## Reference
-- [Explaining and Harnessing Adversarial Examples](https://arxiv.org/abs/1412.6572)
+- [Goodfellow,Shlens,Szegedy][Explaining and Harnessing Adversarial Examples](https://arxiv.org/abs/1412.6572)
 - [14. Neural Networks, Structure, Weights and Matrices](https://python-course.eu/machine-learning/neural-networks-structure-weights-and-matrices.php)
 
   
